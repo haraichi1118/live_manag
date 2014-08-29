@@ -1,0 +1,55 @@
+@(expenses: List[Expense],
+        incomeAndExpenditures: List[IncomeAndExpenditure],
+        liveDetailForm: Form[LiveDetailController.LiveDetailFormData],
+        titleId: Long)
+
+@import helper._
+
+@main("live detail") {
+    <div>
+        <p>■Expenses</p>
+        <div>
+            <table border="1">
+                <tr>
+                    <th>item name</th>
+                    <th>price</th>
+                    <th>check</th>
+                </tr>
+                @expenses.map { expense =>
+                    <tr>
+                        <td>@expense.item_name</td>
+                        <td>@expense.price</td>
+                        <td>@expense.ex_check</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div>
+        @form(routes.ExpenseController.create(titleId)) {
+            @inputText(liveDetailForm("itemName"),
+                '_showConstraints -> false,
+                '_label -> "",
+                'placeholder -> " --- item name ---",
+                'size -> "15"
+            )
+            @inputText(liveDetailForm("price"),
+                '_showConstraints -> false,
+                '_label -> "",
+                'placeholder -> " --- place ---",
+                'size -> "10"
+            )
+            <input type="submit" />
+        }
+        </div>
+        <div>
+            @form(routes.IncomeAndExpenditureController.creat(titleId)) {
+                @inputDate(liveDetailForm("targetDate")),
+                '_showConstraints -> false,
+                '_label -> "",
+                'placeholder -> " --- yyyy-mm-dd ---",
+                'size -> "10"
+            }
+            <input type="submit">
+        </div>
+    </div>
+}

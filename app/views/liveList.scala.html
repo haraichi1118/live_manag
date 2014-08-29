@@ -1,0 +1,26 @@
+@(liveTitle: List[LiveTitle], liveform: Form[String])
+
+@import helper._
+
+@main("live list") {
+    <div>
+        @form(routes.LiveController.create()) {
+            <p>■CREATE LIVE</p>
+            @inputText(liveform("title"),
+                '_showConstraints -> false,
+                '_label -> "",
+                'placeholder -> " --- live title ---",
+                'size -> "15"
+            )
+            <input type="submit" />
+        }
+    </div>
+    <div>
+        @liveTitle.map { liveTitle =>
+            <a href="/detail/@liveTitle.id">@liveTitle.title</a>
+            @form(routes.LiveController.delete(liveTitle.id)) {
+                <input type="submit" class="" value="Delete">
+            }
+        }
+    </div>
+}
